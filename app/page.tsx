@@ -57,7 +57,7 @@ export default async function Home() {
 
   return (
     <div className="min-h-screen p-8">
-      <h1 className="text-4xl font-bold text-center mb-8">Pesos Argentinos a <span className='text-green-500'>Dolares</span> o <span className='text-blue-500'>Euros</span></h1>
+      <h1 className="text-4xl font-bold text-center mb-8">Peso Argentinos a <span aria-label='💵' className='text-green-500'>Dolares</span>/<span aria-label='💶' className='text-blue-500'>Euros</span></h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <Suspense fallback={[true, false, false, false].map((v, i) => <LoadingRate key={i} selectedRate={v} />)}>
