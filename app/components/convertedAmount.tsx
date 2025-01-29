@@ -27,7 +27,7 @@ export default function ConvertedAmount({ rates }: { rates: ExchangeRate[] }) {
     return (
         <>{convertedAmount && <div className="text-center text-xl font-semibold">
             {conversionType === 'ARS_TO_X'
-                ? <span>${<NumericFormat value={convertedAmount} allowLeadingZeros thousandSeparator="," displayType="text" />} USD</span>
+                ? <span>${<NumericFormat value={convertedAmount} allowLeadingZeros thousandSeparator="," displayType="text" />} {selectedRate === "euro_blue" || selectedRate === "euro_oficial" ? "EUR" : "USD"}</span>
                 : <span>${<NumericFormat value={convertedAmount} allowLeadingZeros thousandSeparator="," displayType="text" />} ARS</span>}
         </div>}
         </>
