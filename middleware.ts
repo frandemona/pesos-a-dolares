@@ -16,8 +16,6 @@ export function middleware(request: NextRequest) {
     // Check if there is any supported locale in the pathname
     const { pathname } = request.nextUrl
 
-    const metadataFiles = ['/robots.txt', '/sitemap.xml', '/favicon.ico']
-    if (metadataFiles.some(file => pathname === file)) return
     const pathnameHasLocale = locales.some(
         (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
     )
@@ -37,10 +35,9 @@ export function middleware(request: NextRequest) {
 export const config = {
     matcher: [
         // Skip all internal paths (_next)
-        '/((?!_next).*)',
-        // Skip for api, favicon.ico, sitemap.xml, robots.txt (metadata files)
-        '/((?!api|favicon.ico|sitemap.xml|robots.txt).*)',
+        // '/((?!_next).*)',
+        '/((?!api|_next/static|_next/image|_next|favicon.ico|sitemap.xml|robots.txt).*)',
         // Optional: only run on root (/) URL
-        '/'
+        // '/'
     ],
 }

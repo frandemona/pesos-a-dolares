@@ -1,13 +1,15 @@
 import ConversionTypeButtons from '../components/conversionTypeButtons'
 import InputButton from '../components/inputButton'
 import Rate from '../components/rate'
-import { ExchangeRate, Locales } from '../models'
+import { ExchangeRate, locales, Locales } from '../models'
 import ConvertedAmount from '../components/convertedAmount'
 import { Suspense } from 'react'
 import LoadingConversionTypeButtons from '../components/loading/conversionType'
 import LoadingRate from '../components/loading/rate'
 import LoadingInputButton from '../components/loading/inputButton'
 import { getDictionary } from '../dictionaries'
+import Link from 'next/link'
+import { flags } from '../flags'
 
 export const revalidate = 300
 
@@ -19,25 +21,21 @@ const fetchRates = async () => {
 
         const formattedRates: ExchangeRate[] = [
             {
-                name: 'Dólar Oficial',
                 type: "dolar_oficial",
                 buy: data.oficial.value_buy,
                 sell: data.oficial.value_sell
             },
             {
-                name: 'Dólar Blue',
                 type: 'dolar_blue',
                 buy: data.blue.value_buy,
                 sell: data.blue.value_sell
             },
             {
-                name: 'Euro Oficial',
                 type: 'euro_oficial',
                 buy: data.oficial_euro.value_buy,
                 sell: data.oficial_euro.value_sell
             },
             {
-                name: 'Euro Blue',
                 type: 'euro_blue',
                 buy: data.blue_euro.value_buy,
                 sell: data.blue_euro.value_sell
@@ -63,7 +61,18 @@ export default async function Home({
     const dict = await getDictionary(lang as "en" | "es")
 
     return (
-        <div className="min-h-screen p-8">
+        <div className="relative min-h-screen p-8">
+            <nav className='absolute right-4 top-2 text-3xl'>
+                <span className='hidden'>Change Language</span>
+                <ul>
+                    {locales.map(local => (
+                        <li key={local}>
+                            {local === lang ? <></> : <Link rel="alternate" href={`/${local}`} hrefLang={local} lang={local}>{flags[local]}</Link>}
+                        </li>
+                    ))}
+                </ul>
+            </nav>
+
             <h1 className="text-4xl font-bold text-center mb-8">{dict.index.argentine_pesos} {dict.index.to} <span aria-label='💵' className='text-green-500'>{dict.index.dollars}</span>/<span aria-label='💶' className='text-blue-500'>{dict.index.euros}</span></h1>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">

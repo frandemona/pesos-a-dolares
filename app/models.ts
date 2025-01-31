@@ -5,7 +5,6 @@ export const locales = ['en', 'es'] as const
 
 
 export interface ExchangeRate {
-    name: string;
     type: (typeof acceptedRates)[number];
     buy: number;
     sell: number;

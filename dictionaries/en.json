@@ -11,6 +11,8 @@
         "amount_in_ars": "Amount in ARS",
         "amount_in": "Amount in",
         "buy": "Buy",
-        "sell": "Sell"
+        "sell": "Sell",
+        "es": "Spanish",
+        "en": "English"
     }
 }

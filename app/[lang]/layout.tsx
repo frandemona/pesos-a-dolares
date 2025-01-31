@@ -32,6 +32,10 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang={(await params).lang}>
+      <head>
+        <link rel="alternate" href="http://www.pesosadolar.es/es" hrefLang="es" />
+        <link rel="alternate" href="http://www.pesosadolar.es/en" hrefLang="en" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
