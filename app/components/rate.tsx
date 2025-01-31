@@ -12,7 +12,7 @@ export default function Rate({ rate, name, dict }: { rate: ExchangeRate, name?: 
             } cursor-pointer`}
         onClick={() => setRateParams({ selectedRate: rate.type })}
     >
-        <h2 className="text-xl font-semibold mb-2">{name || rate.name}</h2>
+        <h2 className="text-xl font-semibold mb-2">{name}</h2>
         <div className="flex justify-between">
             <p>{dict.index.buy}: ${rate.buy.toFixed(2)}</p>
             <p>{dict.index.sell}: ${rate.sell.toFixed(2)}</p>
