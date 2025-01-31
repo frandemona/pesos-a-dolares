@@ -15,9 +15,14 @@ function getLocale(acceptLanguageHeader: string) {
 export function middleware(request: NextRequest) {
     // Check if there is any supported locale in the pathname
     const { pathname } = request.nextUrl
+
+    const metadataFiles = ['/robots.txt', '/sitemap.xml', '/favicon.ico']
+    if (metadataFiles.some(file => pathname === file)) return
     const pathnameHasLocale = locales.some(
         (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
     )
+
+    console.log(pathname);
 
     if (pathnameHasLocale) return
 
@@ -33,7 +38,8 @@ export const config = {
     matcher: [
         // Skip all internal paths (_next)
         '/((?!_next).*)',
-        '/((?!sitemap.xml).*)',
+        // Skip for api, favicon.ico, sitemap.xml, robots.txt (metadata files)
+        '/((?!api|favicon.ico|sitemap.xml|robots.txt).*)',
         // Optional: only run on root (/) URL
         '/'
     ],
