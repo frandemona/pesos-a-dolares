@@ -33,6 +33,7 @@ export const config = {
     matcher: [
         // Skip all internal paths (_next)
         '/((?!_next).*)',
+        '/((?!sitemap.xml).*)',
         // Optional: only run on root (/) URL
         '/'
     ],
