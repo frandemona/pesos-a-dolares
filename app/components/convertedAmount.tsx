@@ -3,12 +3,12 @@
 import { useQueryStates } from "nuqs"
 import { ratesSearchParams } from "../searchParams"
 import { NumericFormat } from "react-number-format"
-import { ExchangeRate } from "../models"
+import { ExchangeRate, Locales } from "../models"
 import { useMemo } from "react"
 
 
 
-export default function ConvertedAmount({ rates }: { rates: ExchangeRate[] }) {
+export default function ConvertedAmount({ rates, lang }: { rates: ExchangeRate[], lang: Locales }) {
     const [{ amount, conversionType, selectedRate },] = useQueryStates(ratesSearchParams)
 
     const convertedAmount = useMemo(() => {
@@ -29,7 +29,7 @@ export default function ConvertedAmount({ rates }: { rates: ExchangeRate[] }) {
 
     return (
         <>{convertedAmount && <div className="text-center text-xl font-semibold">
-            <span>{<NumericFormat prefix={conversionType !== 'ARS_TO_X' ? 'AR$' : selectedRate === "euro_blue" || selectedRate === "euro_oficial" ? "€" : "U$D"} value={convertedAmount} thousandSeparator="," decimalSeparator="." displayType="text" />}</span>
+            <span>{<NumericFormat prefix={conversionType !== 'ARS_TO_X' ? 'AR$' : selectedRate === "euro_blue" || selectedRate === "euro_oficial" ? "€" : "U$D"} value={convertedAmount} thousandSeparator={lang === "en" ? "," : "."} decimalSeparator={lang === "en" ? "." : ","} displayType="text" />}</span>
         </div>}
         </>
     )

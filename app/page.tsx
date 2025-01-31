@@ -7,6 +7,7 @@ import { Suspense } from 'react'
 import LoadingConversionTypeButtons from './components/loading/conversionType'
 import LoadingRate from './components/loading/rate'
 import LoadingInputButton from './components/loading/inputButton'
+import { getDictionary } from './dictionaries'
 
 export const revalidate = 300
 
@@ -54,15 +55,17 @@ const fetchRates = async () => {
 
 export default async function Home() {
   const rates = await fetchRates();
+  const lang = 'es'
+  const dict = await getDictionary(lang)
 
   return (
     <div className="min-h-screen p-8">
-      <h1 className="text-4xl font-bold text-center mb-8">Peso Argentinos a <span aria-label='💵' className='text-green-500'>Dolares</span>/<span aria-label='💶' className='text-blue-500'>Euros</span></h1>
+      <h1 className="text-4xl font-bold text-center mb-8">{dict.index.argentine_pesos} {dict.index.to} <span aria-label='💵' className='text-green-500'>{dict.index.dollars}</span>/<span aria-label='💶' className='text-blue-500'>{dict.index.euros}</span></h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <Suspense fallback={[true, false, false, false].map((v, i) => <LoadingRate key={i} selectedRate={v} />)}>
           {rates.map((rate) => (
-            <Rate key={rate.type} rate={rate} />
+            <Rate key={rate.type} rate={rate} dict={dict} />
           ))}
         </Suspense>
       </div>
@@ -75,11 +78,11 @@ export default async function Home() {
         </div>
 
         <Suspense fallback={<LoadingInputButton />}>
-          <InputButton />
+          <InputButton dict={dict} />
         </Suspense>
 
         <Suspense fallback={null}>
-          <ConvertedAmount rates={rates} />
+          <ConvertedAmount rates={rates} lang={lang} />
         </Suspense>
       </div>
     </div>

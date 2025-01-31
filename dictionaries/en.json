@@ -1,0 +1,16 @@
+{
+    "index": {
+        "argentine_pesos": "Argentine Pesos",
+        "dollars": "Dollars",
+        "euros": "Euros",
+        "to": "to",
+        "dolar_oficial": "Official Dollar",
+        "dolar_blue": "Blue Dollar",
+        "euro_oficial": "Official Euro",
+        "euro_blue": "Blue Euro",
+        "amount_in_ars": "Amount in ARS",
+        "amount_in": "Amount in",
+        "buy": "Buy",
+        "sell": "Sell"
+    }
+}

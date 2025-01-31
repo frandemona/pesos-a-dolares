@@ -1,10 +1,10 @@
 "use client"
 
 import { useQueryStates } from "nuqs"
-import { ExchangeRate } from "../models"
+import { ExchangeRate, GetDictionary, } from "../models"
 import { ratesSearchParams } from "../searchParams"
 
-export default function Rate({ rate }: { rate: ExchangeRate }) {
+export default function Rate({ rate, name, dict }: { rate: ExchangeRate, name?: string, dict: GetDictionary }) {
     const [{ selectedRate }, setRateParams] = useQueryStates(ratesSearchParams)
 
     return (<div
@@ -12,10 +12,10 @@ export default function Rate({ rate }: { rate: ExchangeRate }) {
             } cursor-pointer`}
         onClick={() => setRateParams({ selectedRate: rate.type })}
     >
-        <h2 className="text-xl font-semibold mb-2">{rate.name}</h2>
+        <h2 className="text-xl font-semibold mb-2">{name || rate.name}</h2>
         <div className="flex justify-between">
-            <p>Compra: ${rate.buy.toFixed(2)}</p>
-            <p>Venta: ${rate.sell.toFixed(2)}</p>
+            <p>{dict.index.buy}: ${rate.buy.toFixed(2)}</p>
+            <p>{dict.index.sell}: ${rate.sell.toFixed(2)}</p>
         </div>
     </div>)
 }
