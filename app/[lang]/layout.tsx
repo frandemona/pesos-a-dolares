@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import CSPostHogProvider from "../providers";
+import { locales } from "../models";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,8 +32,15 @@ export default async function RootLayout({
   children: React.ReactNode;
   params: Promise<{ lang: 'en' | 'es' }>;
 }>) {
+  const { lang } = await params;
+
+  // Validate locale and return 404 for unhandled paths falling back to [lang]
+  if (!(locales as readonly string[]).includes(lang)) {
+    notFound();
+  }
+
   return (
-    <html lang={(await params).lang}>
+    <html lang={lang}>
       <head>
         <link rel="alternate" href="http://www.pesosadolar.es/es" hrefLang="es" />
         <link rel="alternate" href="http://www.pesosadolar.es/en" hrefLang="en" />

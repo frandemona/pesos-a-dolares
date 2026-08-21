@@ -9,6 +9,7 @@ import LoadingRate from '../components/loading/rate'
 import LoadingInputButton from '../components/loading/inputButton'
 import { getDictionary } from '../dictionaries'
 import Link from 'next/link'
+import { notFound } from 'next/navigation'
 import { flags } from '../flags'
 
 export const revalidate = 300
@@ -56,9 +57,15 @@ export default async function Home({
 }: {
     params: Promise<{ lang: Locales }>
 }) {
-    const rates = await fetchRates();
     const lang = (await params).lang;
-    const dict = await getDictionary(lang as "en" | "es")
+
+    // Validate locale parameter and trigger 404 if invalid
+    if (!locales.includes(lang)) {
+        notFound();
+    }
+
+    const rates = await fetchRates();
+    const dict = await getDictionary(lang);
 
     return (
         <div className="relative min-h-screen p-8">
